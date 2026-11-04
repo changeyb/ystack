@@ -14,7 +14,9 @@
 
 安装器在目标项目的 `.agents/skills/` 下创建指向 ystack 源码的软链。可重复执行，遇到同名技能目录或指向其他位置的链接时会停止并列出冲突。保留 ystack 源码目录，技能里的跨目录引用和脚本从这里解析。安装器按 [Codex 的技能发现规则](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) 布置软链。
 
-在目标项目打开新的 Codex 对话，通过 `/skills` 查看技能，或直接调用 `$poteto-mode`、`$how`、`$why`、`$tdd`、`$no-comments` 和 `$reflect`。通过 `$setup-pstack` 配置角色模型。默认继承会话的子代理模型选择。原来只允许显式调用的技能通过 `agents/openai.yaml` 保留这个行为。
+在目标项目打开新的 Codex 对话，通过 `/skills` 查看技能，或直接调用 `$poteto-mode`、`$how`、`$why`、`$tdd`、`$no-comments` 和 `$reflect`。原来只允许显式调用的技能通过 `agents/openai.yaml` 保留这个行为。
+
+Codex 默认按角色选择 GPT-6.1 Terra、GPT-6.1 Sol 或 GPT-6 Astra，推理强度也按角色配置。可通过 `$setup-pstack` 覆盖默认值。当前会话无法使用所选模型或档位时，按适配表回退。 [Codex 模型默认值](../../skills/poteto-mode/references/codex.md#models-and-setup)
 
 [运行时适配表](../../skills/poteto-mode/references/codex.md) 定义子代理、模型、聊天证据和各 playbook 的能力检查。
 

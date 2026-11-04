@@ -5,7 +5,7 @@ description: Configure which models pstack uses per role and at what reasoning b
 
 # Setup pstack
 
-In Codex, follow **Models and setup** in the [runtime adapter](../poteto-mode/references/codex.md) instead of steps 1–5 below. Use step 5 as the role list, then continue at step 6.
+In Codex, use the role defaults and configuration procedure in [Models and setup](../poteto-mode/references/codex.md#models-and-setup) in place of steps 1–5. Then continue at step 6.
 
 Write pstack's model settings, one model per role:
 

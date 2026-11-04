@@ -18,12 +18,33 @@ Read this before applying Cursor-specific steps in a ystack skill or playbook. R
 
 ## Models and setup
 
-Read `~/.agents/pstack-models.md` when resolving roles. Use the role labels from [setup-pstack](../../setup-pstack/SKILL.md). Codex values are `inherit-parent`, `auto`, or `<model-id> [<reasoning-effort>]`, with comma-separated entries for panels. Check real IDs and efforts against the active subagent schema or the model catalog for that surface and account. Model availability in the chat picker alone does not establish availability for a subagent.
+Use these defaults for Codex role selection, including when a playbook or standalone skill gives a Cursor model example. Terra handles scoped exploration, tooling review, and prose. Sol handles implementation, investigation, and synthesis. Astra handles the hardest tasks and the deeper design or review seat. Use the listed effort directly in Codex.
 
-- For an absent, inherited, unsupported, or rejected role value, omit model and effort overrides. Inheritance uses the session's default subagent resolution. A configured session-wide default can differ from the parent's model.
-- Pass an accepted effort separately, for example as `reasoning_effort` if the tool has that field. Pass a model only when the tool and session permit overrides. Keep the role's effort or let the session resolve it. Cursor slugs, their `-fast` suffix, and their budget ladder do not translate.
-- Keep the number of panel seats when a model falls back. Report the actual coverage. If the parent family or an eligible different family cannot be verified, skip any cross-family judge. Arena can still pick a base from isolated candidates. In Interrogate, Reflect, and trail review, label same-family or self-review as such. For Eval, hold the blinded cross-family verdict when its judge is unavailable.
-- For `$setup-pstack`, use the role list in step 5 and load existing settings as in step 2. Start new roles at `inherit-parent`, with one entry per default panel seat and an empty cross-judge pool. Offer only confirmed model and effort combinations that the current surface permits. An inherited configuration works without a model catalog. Budget selection is optional and applies only to explicitly configured models with supported effort values. Confirm the mapping, validate it, and replace the settings file without Cursor frontmatter. Omit the budget line when no budget is selected. If user-level writes are restricted, show the completed mapping and the intended path. Continue with the setup skill's confirmation and optional verification steps.
+```text
+feature, refactoring: gpt-6.1-sol high
+bug-fix: gpt-6.1-sol medium
+perf-issue: gpt-6.1-sol high
+hillclimb: gpt-6.1-sol high
+judgment and prose: gpt-6.1-terra medium
+hardest tasks: gpt-6-astra xhigh
+how explorer: gpt-6.1-terra medium
+how explainer: gpt-6.1-sol medium
+why investigators: gpt-6.1-sol medium
+why synthesizer: gpt-6.1-sol high
+reflect tooling: gpt-6.1-terra medium
+reflect judgment, divergent, synthesizer: gpt-6-astra high
+arena runners: gpt-6.1-sol high, gpt-6-astra high
+arena cross-judge pool: gpt-6-astra high
+swarm workers: gpt-6.1-sol medium
+architect runners: gpt-6.1-sol high, gpt-6-astra xhigh
+interrogate reviewers: gpt-6.1-sol high, gpt-6-astra high
+```
+
+- Resolve a named role from `~/.agents/pstack-models.md` first, then the table above. Values are `inherit-parent`, `auto`, or `<model-id> [<reasoning-effort>]`, with comma-separated entries for panels. Keep explicit aliases and omit both overrides for them. For a role without a settings key, use Terra medium for scoped read-only or prose work, Sol high for complex implementation, and Astra xhigh for the hardest work.
+- Check IDs and efforts against the active subagent tool and session permissions. Model availability in the chat picker alone does not establish availability for a subagent. Pass the effort separately, for example as `reasoning_effort` when supported. If an override is unavailable or rejected, try the role default when it is supported and distinct. If the default cannot be used, omit the unsupported override and report the fallback. Session-wide defaults can differ from the parent's model. A full-history fork can restrict overrides, so follow the active tool contract.
+- Preserve the number of runner or reviewer seats when a model falls back. GPT-6.1 Sol, GPT-6.1 Terra, and GPT-6 Astra are one family for pstack review gates. A cross-family judge requires a confirmed eligible family different from the parent. Skip the judge if the parent family or a different eligible family cannot be verified. Arena can still pick a base. Label same-family reviews in Interrogate, Reflect, and trail review. Hold Eval's cross-family verdict when its judge is unavailable.
+- For `$setup-pstack`, show the effective choices from the table and existing settings. Budget selection is optional. Preserve the per-role efforts by default and apply a chosen budget only to confirmed models that support that effort. Confirm and validate overrides before writing them without Cursor frontmatter. A missing role line uses the table, so setup is optional. Preserve valid existing overrides unless the user changes them. If user-level writes are restricted, show the completed mapping and intended path. Continue with the setup skill's confirmation and optional verification steps.
+- For Cloud dispatch, apply role defaults only when the dispatch surface exposes model and effort controls. Otherwise record the Cloud environment's effective settings when known.
 
 ## Chat evidence
 

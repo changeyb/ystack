@@ -38,7 +38,9 @@ The [Claude Code adapter](../harness/claude-code.md) covers the tool-name differ
 
 ## Pick your models
 
-Run:
+In Codex, [role defaults](../../skills/poteto-mode/references/codex.md#models-and-setup) apply without setup. Invoke `$setup-pstack` to override them.
+
+For the Cursor setup described below, run:
 
 ```text
 /setup-pstack
